@@ -33,7 +33,7 @@ class StatusesControllerTest < ActionController::TestCase
     sign_in users(:sam)
 
     assert_difference('Status.count') do
-      post :create, status: { content: @status.content }
+      post :create, status: { content: @status.content, user_id: users(:sam) }
     end
 
     assert_redirected_to status_path(assigns(:status))
@@ -44,7 +44,7 @@ class StatusesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit not logged in" do
+  test "should not get edit when not logged in" do
     get :edit, id: @status
     assert_response :redirect
     assert_redirected_to new_user_session_path
